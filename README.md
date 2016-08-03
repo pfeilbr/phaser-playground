@@ -6,7 +6,8 @@ project to learn the [Phaser](http://phaser.io/) HTML5 game framework
 
 Simple drop and stack game
 
-`index.html`
+
+Play @ <https://pfeilbr.github.io/phaser-playground/>
 
 ## Developing
 
