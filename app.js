@@ -93,6 +93,8 @@ Game.Main.prototype = {
     this.game.load.audio('error', ['assets/error.wav']);
     this.game.load.audio('hit', ['assets/hit.wav']);
     this.game.load.audio('pause', ['assets/pause.wav']);
+    this.game.load.image('pig', 'assets/pig.png');
+    this.game.load.image('background', 'assets/background.png');
   },
 
   create: function() {
@@ -121,7 +123,7 @@ Game.Main.prototype = {
     // create transparent background
     // this is to capture any clicks or taps, but allows other buttons/text
     // to be clicked like pause
-    this.background = this.game.add.sprite(0, 0);
+    this.background = this.game.add.sprite(0, 0, 'background');
     this.background.fixedToCamera = true;
     this.background.scale.setTo(this.game.width, this.game.height);
     this.background.inputEnabled = true;
@@ -133,6 +135,10 @@ Game.Main.prototype = {
     this.game.physics.enable([this.ground.i], Phaser.Physics.ARCADE);
     this.ground.i.body.allowGravity = false;
     this.ground.i.body.immovable = true;
+
+    this.bg=this.game.add.sprite(0, 0, 'background');
+    this.bg.width=this.game.width;
+    this.bg.height=this.game.height;
 
     // create drop item
     this.game.create.texture('dropItem', this.createBlock('3', 30, 30), 1, 1);
@@ -187,6 +193,7 @@ Game.Main.prototype = {
 
         this.pauseText.text = 'resume';
 
+
         this.pauseSound.onStop.addOnce(function() {
           this.game.sound.mute = true;
         }, this);
@@ -202,12 +209,15 @@ Game.Main.prototype = {
     }, this);
 
 
-    this.char.i = this.game.add.sprite(0, this.game.height * this.panel.height, 'ufo');
+    this.char.i = this.game.add.sprite(0, this.game.height * this.panel.height, 'pig');
+     this.char.i.scale.setTo(0.08,0.08)
     this.game.physics.enable([this.char.i], Phaser.Physics.ARCADE);
     this.char.i.body.bounce.x = 1;
     this.char.i.body.velocity.x = 200;
     this.char.i.body.allowGravity = false;
     this.char.i.body.collideWorldBounds = true;
+
+
   },
 
   update: function() {
@@ -250,7 +260,8 @@ Game.Main.prototype = {
       return;
     }
 
-    self.dropItem = self.game.add.sprite(self.char.i.x, self.char.i.y + self.char.i.height, 'dropItem');
+    self.dropItem = self.game.add.sprite(self.char.i.x, self.char.i.y + self.char.i.height, 'pig');
+    self.dropItem.scale.setTo(0.08,0.08)
     self.game.physics.enable([self.dropItem], Phaser.Physics.ARCADE);
     self.dropItem.body.bounce.y = 0.2;
     self.dropItem.body.collideWorldBounds = true;
